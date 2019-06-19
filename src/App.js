@@ -59,12 +59,15 @@ function App() {
     }
   };
 
+
   const handleSubmit = (e) =>{
     e.preventDefault();
     let target = e.target.numInput.value;
     console.log(target);
     // alert(linearSearch(data, target));
-    const sorted = data.sort()
+    const sorted = data.sort((a, b) =>{
+      return a-b;
+    })
     console.log(sorted);
     alert(binarySearch(sorted, target));
   }
