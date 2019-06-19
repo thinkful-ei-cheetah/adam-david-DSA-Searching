@@ -1,5 +1,7 @@
 'use strict';
 
+const Queue = require('./Queue');
+
 class BinarySearchTree {
   constructor(key = null, value = null, parent = null) {
     this.key = key;
@@ -145,6 +147,24 @@ class BinarySearchTree {
     }
     return this.left._findMin();
   }
+
+  bfs(values=[]){
+    const queue = new Queue();
+    queue.enqueue(this);
+    while (queue.length){
+      const node = queue.dequeue();
+      values.push(node.value);
+  
+      if(node.left){
+        queue.enqueue(node.left);
+      }
+      if(node.right){
+        queue.enqueue(node.right);
+      }
+    }
+    return values;
+  }
+
 }
 
 function preOrder(bst){
@@ -197,5 +217,48 @@ function main() {
 }
 
 
-console.log(main())
+// console.log(main())
 module.exports = BinarySearchTree;
+
+
+//           Captain Picard
+//           /               \
+//     Commander Riker       Commander Data
+//         /         \                \
+//     Lt. Cmdr.   Lt. Cmdr.          Lt. Cmdr.
+//      Worf        LaForge            Crusher
+//         /                           /
+// Lieutenant                  Lieutenant
+// security-officer            Selar
+
+// Output Captian picard, Commander Riker, Data, Worf, LaForge, Crusher, security-officer, Selar. 
+
+function commandStructure(){
+  const bst = new BinarySearchTree(5, 'Captain Picard');
+
+  bst.insert(3, 'Commander Riker');
+  bst.insert(6, 'Data');
+  bst.insert(2, 'Worf');
+  bst.insert(4, 'Laforge');
+  bst.insert(1, 'security-officer');
+  bst.insert(8, 'Crusher');
+  bst.insert(7, 'Selar');
+
+  return bst.bfs();
+}
+
+// console.log(commandStructure());
+
+function maxProfit(arr){
+  let max = 0;
+  for(let i = 0; i< arr.length; i++){
+    for(let j = i+1; j< arr.length; j++){
+      if(arr[j] - arr[i] > max){
+        max = arr[j] - arr[i];
+      }
+    }
+  }
+  return max;
+}
+
+console.log(maxProfit([128, 97, 121, 123, 98, 97, 105]));
